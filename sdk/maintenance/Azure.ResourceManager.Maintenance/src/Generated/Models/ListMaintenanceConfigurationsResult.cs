@@ -12,17 +12,17 @@ using Azure.ResourceManager.Maintenance;
 namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> Response for MaintenanceConfigurations list. </summary>
-    internal partial class MaintenanceConfigurationListResult
+    internal partial class ListMaintenanceConfigurationsResult
     {
-        /// <summary> Initializes a new instance of MaintenanceConfigurationListResult. </summary>
-        internal MaintenanceConfigurationListResult()
+        /// <summary> Initializes a new instance of ListMaintenanceConfigurationsResult. </summary>
+        internal ListMaintenanceConfigurationsResult()
         {
             Value = new ChangeTrackingList<MaintenanceConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of ListMaintenanceConfigurationsResult. </summary>
         /// <param name="value"> The list of maintenance Configurations. </param>
-        internal MaintenanceConfigurationListResult(IReadOnlyList<MaintenanceConfigurationData> value)
+        internal ListMaintenanceConfigurationsResult(IReadOnlyList<MaintenanceConfigurationData> value)
         {
             Value = value;
         }

@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary> The ResourceGroupResourceGetApplyUpdatesByParentOptions. </summary>
-    public partial class ResourceGroupResourceGetApplyUpdatesByParentOptions
+    /// <summary> The ApplyUpdateCollectionGetOptions. </summary>
+    public partial class ApplyUpdateCollectionGetOptions
     {
-        /// <summary> Initializes a new instance of ResourceGroupResourceGetApplyUpdatesByParentOptions. </summary>
+        /// <summary> Initializes a new instance of ApplyUpdateCollectionGetOptions. </summary>
         /// <param name="providerName"> Resource provider name. </param>
         /// <param name="resourceParentType"> Resource parent type. </param>
         /// <param name="resourceParentName"> Resource parent identifier. </param>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="applyUpdateName"> applyUpdate Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
-        public ResourceGroupResourceGetApplyUpdatesByParentOptions(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName)
+        public ApplyUpdateCollectionGetOptions(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName)
         {
             Argument.AssertNotNull(providerName, nameof(providerName));
             Argument.AssertNotNull(resourceParentType, nameof(resourceParentType));

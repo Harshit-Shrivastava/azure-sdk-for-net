@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Maintenance
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _maintenanceApplyUpdateApplyUpdatesClientDiagnostics;
-        private ApplyUpdatesRestOperations _maintenanceApplyUpdateApplyUpdatesRestClient;
+        private ClientDiagnostics _applyUpdateClientDiagnostics;
+        private ApplyUpdatesRestOperations _applyUpdateRestClient;
         private ClientDiagnostics _maintenanceConfigurationClientDiagnostics;
         private MaintenanceConfigurationsRestOperations _maintenanceConfigurationRestClient;
 
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Maintenance
         {
         }
 
-        private ClientDiagnostics MaintenanceApplyUpdateApplyUpdatesClientDiagnostics => _maintenanceApplyUpdateApplyUpdatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceApplyUpdateResource.ResourceType.Namespace, Diagnostics);
-        private ApplyUpdatesRestOperations MaintenanceApplyUpdateApplyUpdatesRestClient => _maintenanceApplyUpdateApplyUpdatesRestClient ??= new ApplyUpdatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MaintenanceApplyUpdateResource.ResourceType));
+        private ClientDiagnostics ApplyUpdateClientDiagnostics => _applyUpdateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ApplyUpdateResource.ResourceType.Namespace, Diagnostics);
+        private ApplyUpdatesRestOperations ApplyUpdateRestClient => _applyUpdateRestClient ??= new ApplyUpdatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApplyUpdateResource.ResourceType));
         private ClientDiagnostics MaintenanceConfigurationClientDiagnostics => _maintenanceConfigurationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationResource.ResourceType.Namespace, Diagnostics);
         private MaintenanceConfigurationsRestOperations MaintenanceConfigurationRestClient => _maintenanceConfigurationRestClient ??= new MaintenanceConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MaintenanceConfigurationResource.ResourceType));
 
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.Maintenance
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of MaintenancePublicConfigurationResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of MaintenancePublicConfigurationResources and their operations over a MaintenancePublicConfigurationResource. </returns>
-        public virtual MaintenancePublicConfigurationCollection GetMaintenancePublicConfigurations()
+        /// <summary> Gets a collection of PublicMaintenanceConfigurationResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of PublicMaintenanceConfigurationResources and their operations over a PublicMaintenanceConfigurationResource. </returns>
+        public virtual PublicMaintenanceConfigurationCollection GetPublicMaintenanceConfigurations()
         {
-            return GetCachedClient(Client => new MaintenancePublicConfigurationCollection(Client, Id));
+            return GetCachedClient(Client => new PublicMaintenanceConfigurationCollection(Client, Id));
         }
 
         /// <summary>
@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.Maintenance
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MaintenanceApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApplyUpdateResource> GetApplyUpdatesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MaintenanceApplyUpdateApplyUpdatesRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MaintenanceApplyUpdateResource(Client, MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e)), MaintenanceApplyUpdateApplyUpdatesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMaintenanceApplyUpdates", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplyUpdateRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ApplyUpdateResource(Client, ApplyUpdateData.DeserializeApplyUpdateData(e)), ApplyUpdateClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApplyUpdates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.Maintenance
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdates(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApplyUpdateResource> GetApplyUpdates(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MaintenanceApplyUpdateApplyUpdatesRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MaintenanceApplyUpdateResource(Client, MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e)), MaintenanceApplyUpdateApplyUpdatesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMaintenanceApplyUpdates", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplyUpdateRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ApplyUpdateResource(Client, ApplyUpdateData.DeserializeApplyUpdateData(e)), ApplyUpdateClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApplyUpdates", "value", null, cancellationToken);
         }
 
         /// <summary>

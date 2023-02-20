@@ -28,7 +28,8 @@ request-path-to-resource-name:
   
   /subscriptions/{subscriptionId}/providers/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}: ConfigurationAssignment
   
-  
+list-exception:
+  - /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}
 
 format-by-name-rules:
   'tenantId': 'uuid'

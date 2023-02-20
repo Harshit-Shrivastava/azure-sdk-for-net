@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Maintenance
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MaintenancePublicConfigurationResource" /> and their operations.
-    /// Each <see cref="MaintenancePublicConfigurationResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="MaintenancePublicConfigurationCollection" /> instance call the GetMaintenancePublicConfigurations method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="PublicMaintenanceConfigurationResource" /> and their operations.
+    /// Each <see cref="PublicMaintenanceConfigurationResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
+    /// To get a <see cref="PublicMaintenanceConfigurationCollection" /> instance call the GetPublicMaintenanceConfigurations method from an instance of <see cref="SubscriptionResource" />.
     /// </summary>
-    public partial class MaintenancePublicConfigurationCollection : ArmCollection, IEnumerable<MaintenancePublicConfigurationResource>, IAsyncEnumerable<MaintenancePublicConfigurationResource>
+    public partial class PublicMaintenanceConfigurationCollection : ArmCollection, IEnumerable<PublicMaintenanceConfigurationResource>, IAsyncEnumerable<PublicMaintenanceConfigurationResource>
     {
-        private readonly ClientDiagnostics _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics;
-        private readonly PublicMaintenanceConfigurationsRestOperations _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient;
+        private readonly ClientDiagnostics _publicMaintenanceConfigurationClientDiagnostics;
+        private readonly PublicMaintenanceConfigurationsRestOperations _publicMaintenanceConfigurationRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MaintenancePublicConfigurationCollection"/> class for mocking. </summary>
-        protected MaintenancePublicConfigurationCollection()
+        /// <summary> Initializes a new instance of the <see cref="PublicMaintenanceConfigurationCollection"/> class for mocking. </summary>
+        protected PublicMaintenanceConfigurationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MaintenancePublicConfigurationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PublicMaintenanceConfigurationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal MaintenancePublicConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PublicMaintenanceConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenancePublicConfigurationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MaintenancePublicConfigurationResource.ResourceType, out string maintenancePublicConfigurationPublicMaintenanceConfigurationsApiVersion);
-            _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient = new PublicMaintenanceConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, maintenancePublicConfigurationPublicMaintenanceConfigurationsApiVersion);
+            _publicMaintenanceConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", PublicMaintenanceConfigurationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(PublicMaintenanceConfigurationResource.ResourceType, out string publicMaintenanceConfigurationApiVersion);
+            _publicMaintenanceConfigurationRestClient = new PublicMaintenanceConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, publicMaintenanceConfigurationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,18 +70,18 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public virtual async Task<Response<MaintenancePublicConfigurationResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PublicMaintenanceConfigurationResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.Get");
+            using var scope = _publicMaintenanceConfigurationClientDiagnostics.CreateScope("PublicMaintenanceConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient.GetAsync(Id.SubscriptionId, resourceName, cancellationToken).ConfigureAwait(false);
+                var response = await _publicMaintenanceConfigurationRestClient.GetAsync(Id.SubscriptionId, resourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MaintenancePublicConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PublicMaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -107,18 +107,18 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public virtual Response<MaintenancePublicConfigurationResource> Get(string resourceName, CancellationToken cancellationToken = default)
+        public virtual Response<PublicMaintenanceConfigurationResource> Get(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.Get");
+            using var scope = _publicMaintenanceConfigurationClientDiagnostics.CreateScope("PublicMaintenanceConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient.Get(Id.SubscriptionId, resourceName, cancellationToken);
+                var response = _publicMaintenanceConfigurationRestClient.Get(Id.SubscriptionId, resourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MaintenancePublicConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PublicMaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,11 +141,11 @@ namespace Azure.ResourceManager.Maintenance
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MaintenancePublicConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenancePublicConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PublicMaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PublicMaintenanceConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MaintenancePublicConfigurationResource(Client, MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(e)), _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics, Pipeline, "MaintenancePublicConfigurationCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _publicMaintenanceConfigurationRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PublicMaintenanceConfigurationResource(Client, MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(e)), _publicMaintenanceConfigurationClientDiagnostics, Pipeline, "PublicMaintenanceConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -162,11 +162,11 @@ namespace Azure.ResourceManager.Maintenance
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenancePublicConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenancePublicConfigurationResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PublicMaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PublicMaintenanceConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MaintenancePublicConfigurationResource(Client, MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(e)), _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics, Pipeline, "MaintenancePublicConfigurationCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _publicMaintenanceConfigurationRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PublicMaintenanceConfigurationResource(Client, MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(e)), _publicMaintenanceConfigurationClientDiagnostics, Pipeline, "PublicMaintenanceConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.Exists");
+            using var scope = _publicMaintenanceConfigurationClientDiagnostics.CreateScope("PublicMaintenanceConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient.GetAsync(Id.SubscriptionId, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _publicMaintenanceConfigurationRestClient.GetAsync(Id.SubscriptionId, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -225,11 +225,11 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.Exists");
+            using var scope = _publicMaintenanceConfigurationClientDiagnostics.CreateScope("PublicMaintenanceConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient.Get(Id.SubscriptionId, resourceName, cancellationToken: cancellationToken);
+                var response = _publicMaintenanceConfigurationRestClient.Get(Id.SubscriptionId, resourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Maintenance
             }
         }
 
-        IEnumerator<MaintenancePublicConfigurationResource> IEnumerable<MaintenancePublicConfigurationResource>.GetEnumerator()
+        IEnumerator<PublicMaintenanceConfigurationResource> IEnumerable<PublicMaintenanceConfigurationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Maintenance
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<MaintenancePublicConfigurationResource> IAsyncEnumerable<MaintenancePublicConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<PublicMaintenanceConfigurationResource> IAsyncEnumerable<PublicMaintenanceConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

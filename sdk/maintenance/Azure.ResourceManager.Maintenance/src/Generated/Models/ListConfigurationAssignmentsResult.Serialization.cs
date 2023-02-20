@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    internal partial class MaintenanceConfigurationAssignmentListResult
+    internal partial class ListConfigurationAssignmentsResult
     {
-        internal static MaintenanceConfigurationAssignmentListResult DeserializeMaintenanceConfigurationAssignmentListResult(JsonElement element)
+        internal static ListConfigurationAssignmentsResult DeserializeListConfigurationAssignmentsResult(JsonElement element)
         {
-            Optional<IReadOnlyList<MaintenanceConfigurationAssignmentData>> value = default;
+            Optional<IReadOnlyList<ConfigurationAssignmentData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -25,16 +26,16 @@ namespace Azure.ResourceManager.Maintenance.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MaintenanceConfigurationAssignmentData> array = new List<MaintenanceConfigurationAssignmentData>();
+                    List<ConfigurationAssignmentData> array = new List<ConfigurationAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(item));
+                        array.Add(ConfigurationAssignmentData.DeserializeConfigurationAssignmentData(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new MaintenanceConfigurationAssignmentListResult(Optional.ToList(value));
+            return new ListConfigurationAssignmentsResult(Optional.ToList(value));
         }
     }
 }

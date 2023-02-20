@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> Response for Updates list. </summary>
-    internal partial class MaintenanceUpdateListResult
+    internal partial class ListUpdatesResult
     {
-        /// <summary> Initializes a new instance of MaintenanceUpdateListResult. </summary>
-        internal MaintenanceUpdateListResult()
+        /// <summary> Initializes a new instance of ListUpdatesResult. </summary>
+        internal ListUpdatesResult()
         {
-            Value = new ChangeTrackingList<MaintenanceUpdate>();
+            Value = new ChangeTrackingList<Update>();
         }
 
-        /// <summary> Initializes a new instance of MaintenanceUpdateListResult. </summary>
+        /// <summary> Initializes a new instance of ListUpdatesResult. </summary>
         /// <param name="value"> The pending updates. </param>
-        internal MaintenanceUpdateListResult(IReadOnlyList<MaintenanceUpdate> value)
+        internal ListUpdatesResult(IReadOnlyList<Update> value)
         {
             Value = value;
         }
 
         /// <summary> The pending updates. </summary>
-        public IReadOnlyList<MaintenanceUpdate> Value { get; }
+        public IReadOnlyList<Update> Value { get; }
     }
 }
