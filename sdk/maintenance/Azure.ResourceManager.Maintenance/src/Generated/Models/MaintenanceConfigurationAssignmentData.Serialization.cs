@@ -5,51 +5,59 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Maintenance
+namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class ApplyUpdateData : IUtf8JsonSerializable
+    public partial class MaintenanceConfigurationAssignmentData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Optional.IsDefined(MaintenanceConfigurationId))
             {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WritePropertyName("maintenanceConfigurationId"u8);
+                writer.WriteStringValue(MaintenanceConfigurationId);
             }
             if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(LastUpdateOn))
-            {
-                writer.WritePropertyName("lastUpdateTime"u8);
-                writer.WriteStringValue(LastUpdateOn.Value, "O");
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static ApplyUpdateData DeserializeApplyUpdateData(JsonElement element)
+        internal static MaintenanceConfigurationAssignmentData DeserializeMaintenanceConfigurationAssignmentData(JsonElement element)
         {
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<UpdateStatus> status = default;
-            Optional<string> resourceId = default;
-            Optional<DateTimeOffset> lastUpdateTime = default;
+            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -84,36 +92,31 @@ namespace Azure.ResourceManager.Maintenance
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("status"u8))
+                        if (property0.NameEquals("maintenanceConfigurationId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new UpdateStatus(property0.Value.GetString());
+                            maintenanceConfigurationId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("resourceId"u8))
                         {
-                            resourceId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lastUpdateTime"u8))
-                        {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            lastUpdateTime = property0.Value.GetDateTimeOffset("O");
+                            resourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ApplyUpdateData(id, name, type, systemData.Value, Optional.ToNullable(status), resourceId.Value, Optional.ToNullable(lastUpdateTime));
+            return new MaintenanceConfigurationAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(location), maintenanceConfigurationId.Value, resourceId.Value);
         }
     }
 }

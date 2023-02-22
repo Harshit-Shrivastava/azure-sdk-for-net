@@ -12,22 +12,22 @@ using Azure.ResourceManager.Maintenance;
 namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> Response for ApplyUpdate list. </summary>
-    internal partial class ListApplyUpdate
+    internal partial class MaintenanceApplyUpdateListResult
     {
-        /// <summary> Initializes a new instance of ListApplyUpdate. </summary>
-        internal ListApplyUpdate()
+        /// <summary> Initializes a new instance of MaintenanceApplyUpdateListResult. </summary>
+        internal MaintenanceApplyUpdateListResult()
         {
-            Value = new ChangeTrackingList<ApplyUpdateData>();
+            Value = new ChangeTrackingList<MaintenanceApplyUpdateData>();
         }
 
-        /// <summary> Initializes a new instance of ListApplyUpdate. </summary>
+        /// <summary> Initializes a new instance of MaintenanceApplyUpdateListResult. </summary>
         /// <param name="value"> The list of apply updates. </param>
-        internal ListApplyUpdate(IReadOnlyList<ApplyUpdateData> value)
+        internal MaintenanceApplyUpdateListResult(IReadOnlyList<MaintenanceApplyUpdateData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of apply updates. </summary>
-        public IReadOnlyList<ApplyUpdateData> Value { get; }
+        public IReadOnlyList<MaintenanceApplyUpdateData> Value { get; }
     }
 }

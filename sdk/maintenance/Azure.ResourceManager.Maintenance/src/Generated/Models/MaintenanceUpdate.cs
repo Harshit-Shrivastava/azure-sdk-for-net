@@ -6,25 +6,26 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> Maintenance update on a resource. </summary>
-    public partial class Update
+    public partial class MaintenanceUpdate
     {
-        /// <summary> Initializes a new instance of Update. </summary>
-        internal Update()
+        /// <summary> Initializes a new instance of MaintenanceUpdate. </summary>
+        internal MaintenanceUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of Update. </summary>
+        /// <summary> Initializes a new instance of MaintenanceUpdate. </summary>
         /// <param name="maintenanceScope"> The impact area. </param>
         /// <param name="impactType"> The impact type. </param>
         /// <param name="status"> The status. </param>
         /// <param name="impactDurationInSec"> Duration of impact in seconds. </param>
         /// <param name="notBefore"> Time when Azure will start force updates if not self-updated by customer before this time. </param>
         /// <param name="resourceId"> The resourceId. </param>
-        internal Update(MaintenanceScope? maintenanceScope, ImpactType? impactType, UpdateStatus? status, int? impactDurationInSec, DateTimeOffset? notBefore, string resourceId)
+        internal MaintenanceUpdate(MaintenanceScope? maintenanceScope, MaintenanceImpactType? impactType, MaintenanceUpdateStatus? status, int? impactDurationInSec, DateTimeOffset? notBefore, ResourceIdentifier resourceId)
         {
             MaintenanceScope = maintenanceScope;
             ImpactType = impactType;
@@ -37,14 +38,14 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> The impact area. </summary>
         public MaintenanceScope? MaintenanceScope { get; }
         /// <summary> The impact type. </summary>
-        public ImpactType? ImpactType { get; }
+        public MaintenanceImpactType? ImpactType { get; }
         /// <summary> The status. </summary>
-        public UpdateStatus? Status { get; }
+        public MaintenanceUpdateStatus? Status { get; }
         /// <summary> Duration of impact in seconds. </summary>
         public int? ImpactDurationInSec { get; }
         /// <summary> Time when Azure will start force updates if not self-updated by customer before this time. </summary>
         public DateTimeOffset? NotBefore { get; }
         /// <summary> The resourceId. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
     }
 }

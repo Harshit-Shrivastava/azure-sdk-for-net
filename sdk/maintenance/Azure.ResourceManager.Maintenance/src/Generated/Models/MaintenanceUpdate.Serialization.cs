@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class Update
+    public partial class MaintenanceUpdate
     {
-        internal static Update DeserializeUpdate(JsonElement element)
+        internal static MaintenanceUpdate DeserializeMaintenanceUpdate(JsonElement element)
         {
             Optional<MaintenanceScope> maintenanceScope = default;
-            Optional<ImpactType> impactType = default;
-            Optional<UpdateStatus> status = default;
+            Optional<MaintenanceImpactType> impactType = default;
+            Optional<MaintenanceUpdateStatus> status = default;
             Optional<int> impactDurationInSec = default;
             Optional<DateTimeOffset> notBefore = default;
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maintenanceScope"u8))
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    impactType = new ImpactType(property.Value.GetString());
+                    impactType = new MaintenanceImpactType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new UpdateStatus(property.Value.GetString());
+                    status = new MaintenanceUpdateStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("impactDurationInSec"u8))
@@ -84,14 +84,19 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         if (property0.NameEquals("resourceId"u8))
                         {
-                            resourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new Update(Optional.ToNullable(maintenanceScope), Optional.ToNullable(impactType), Optional.ToNullable(status), Optional.ToNullable(impactDurationInSec), Optional.ToNullable(notBefore), resourceId.Value);
+            return new MaintenanceUpdate(Optional.ToNullable(maintenanceScope), Optional.ToNullable(impactType), Optional.ToNullable(status), Optional.ToNullable(impactDurationInSec), Optional.ToNullable(notBefore), resourceId.Value);
         }
     }
 }

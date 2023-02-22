@@ -23,17 +23,14 @@ namespace Azure.ResourceManager.Maintenance.Models
         }
 
         private const string HostValue = "Host";
-        private const string ResourceValue = "Resource";
         private const string OSImageValue = "OSImage";
         private const string ExtensionValue = "Extension";
         private const string InGuestPatchValue = "InGuestPatch";
-        private const string SqldbValue = "SQLDB";
-        private const string SQLManagedInstanceValue = "SQLManagedInstance";
+        private const string SqlDBValue = "SQLDB";
+        private const string SqlManagedInstanceValue = "SQLManagedInstance";
 
         /// <summary> This maintenance scope controls installation of azure platform updates i.e. services on physical nodes hosting customer VMs. </summary>
         public static MaintenanceScope Host { get; } = new MaintenanceScope(HostValue);
-        /// <summary> This maintenance scope controls the default update maintenance of the Azure Resource. </summary>
-        public static MaintenanceScope Resource { get; } = new MaintenanceScope(ResourceValue);
         /// <summary> This maintenance scope controls os image installation on VM/VMSS. </summary>
         public static MaintenanceScope OSImage { get; } = new MaintenanceScope(OSImageValue);
         /// <summary> This maintenance scope controls extension installation on VM/VMSS. </summary>
@@ -41,9 +38,9 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> This maintenance scope controls installation of windows and linux packages on VM/VMSS. </summary>
         public static MaintenanceScope InGuestPatch { get; } = new MaintenanceScope(InGuestPatchValue);
         /// <summary> This maintenance scope controls installation of SQL server platform updates. </summary>
-        public static MaintenanceScope Sqldb { get; } = new MaintenanceScope(SqldbValue);
+        public static MaintenanceScope SqlDB { get; } = new MaintenanceScope(SqlDBValue);
         /// <summary> This maintenance scope controls installation of SQL managed instance platform update. </summary>
-        public static MaintenanceScope SQLManagedInstance { get; } = new MaintenanceScope(SQLManagedInstanceValue);
+        public static MaintenanceScope SqlManagedInstance { get; } = new MaintenanceScope(SqlManagedInstanceValue);
         /// <summary> Determines if two <see cref="MaintenanceScope"/> values are the same. </summary>
         public static bool operator ==(MaintenanceScope left, MaintenanceScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MaintenanceScope"/> values are not the same. </summary>
