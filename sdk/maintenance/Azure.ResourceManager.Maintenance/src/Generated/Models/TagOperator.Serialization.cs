@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Maintenance.Models
 
         public static TagOperator ToTagOperator(this string value)
         {
-            if (string.Equals(value, "All", StringComparison.InvariantCultureIgnoreCase)) return TagOperator.All;
-            if (string.Equals(value, "Any", StringComparison.InvariantCultureIgnoreCase)) return TagOperator.Any;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "All")) return TagOperator.All;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Any")) return TagOperator.Any;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TagOperator value.");
         }
     }

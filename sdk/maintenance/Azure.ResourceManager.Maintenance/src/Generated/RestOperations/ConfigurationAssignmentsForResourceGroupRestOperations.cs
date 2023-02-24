@@ -81,7 +81,6 @@ namespace Azure.ResourceManager.Maintenance
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.Maintenance
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);

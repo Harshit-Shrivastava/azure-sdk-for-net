@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Maintenance
             return message;
         }
 
-        /// <summary> Get configuration assignment for resource.. </summary>
+        /// <summary> Get configuration for resource. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Maintenance
             }
         }
 
-        /// <summary> Get configuration assignment for resource.. </summary>
+        /// <summary> Get configuration for resource. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Maintenance
             return message;
         }
 
-        /// <summary> Get configuration assignment for resource.. </summary>
+        /// <summary> Get configuration for resource. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Maintenance
             }
         }
 
-        /// <summary> Get configuration assignment for resource.. </summary>
+        /// <summary> Get configuration for resource. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>

@@ -10,7 +10,7 @@ csharp: true
 library-name: Maintenance
 namespace: Azure.ResourceManager.Maintenance
 # default tag is a preview version
-require: C:\Users\fenzhou\Develop\azure-rest-api-specs\specification\maintenance\resource-manager\readme.md
+require: D:\DS\azure-rest-api-specs-pr\specification\maintenance\resource-manager\readme.md
 tag: package-2023-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
