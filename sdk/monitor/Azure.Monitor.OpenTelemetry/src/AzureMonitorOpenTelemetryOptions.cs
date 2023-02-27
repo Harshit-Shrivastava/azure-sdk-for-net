@@ -5,6 +5,9 @@
 
 using System.Runtime.Serialization;
 using Azure.Monitor.OpenTelemetry.Exporter;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using System;
 
 namespace Azure.Monitor.OpenTelemetry
 {
@@ -24,17 +27,12 @@ namespace Azure.Monitor.OpenTelemetry
         /// <remarks>
         /// (https://docs.microsoft.com/azure/azure-monitor/app/sdk-connection-string).
         /// </remarks>
-        public string ConnectionString
-        {
-            get
-            {
-                return AzureMonitorExporterOptions.ConnectionString;
-            }
-            set
-            {
-                AzureMonitorExporterOptions.ConnectionString = value;
-            }
-        }
+        public string ConnectionString { get; set; }
+
+        /// <summary>
+        /// Disable offline storage.
+        /// </summary>
+        public bool DisableOfflineStorage { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether Logs should be enabled.
@@ -51,18 +49,33 @@ namespace Azure.Monitor.OpenTelemetry
         /// </summary>
         public bool EnableTraces { get; set; } = true;
 
+        /// <summary>
+        /// Override the default directory for offline storage.
+        /// </summary>
+        public string StorageDirectory { get; set; }
+
         internal AzureMonitorOpenTelemetryOptions Clone(AzureMonitorOpenTelemetryOptions options)
         {
             if (options != null)
             {
                 AzureMonitorExporterOptions = options.AzureMonitorExporterOptions;
                 ConnectionString = options.ConnectionString;
+                DisableOfflineStorage = options.DisableOfflineStorage;
                 EnableLogs = options.EnableLogs;
                 EnableMetrics = options.EnableMetrics;
                 EnableTraces = options.EnableTraces;
+                StorageDirectory = options.StorageDirectory;
             }
 
             return this;
+        }
+
+        internal void SetValueToExporterOptions(IServiceProvider sp)
+        {
+            var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get("");
+            exporterOptions.ConnectionString = ConnectionString;
+            exporterOptions.DisableOfflineStorage = DisableOfflineStorage;
+            exporterOptions.StorageDirectory = StorageDirectory;
         }
     }
 }
