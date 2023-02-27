@@ -28,10 +28,13 @@ namespace Azure.Monitor.OpenTelemetry
 
             builder.WithTracing(b => b
                             .AddAspNetCoreInstrumentation()
+                            .AddHttpClientInstrumentation()
+                            .AddSqlClientInstrumentation()
                             .AddAzureMonitorTraceExporter());
 
             builder.WithMetrics(b => b
                             .AddAspNetCoreInstrumentation()
+                            .AddHttpClientInstrumentation()
                             .AddAzureMonitorMetricExporter());
 
             ServiceDescriptor? sdkTracerProviderServiceRegistration = null;
@@ -73,7 +76,7 @@ namespace Azure.Monitor.OpenTelemetry
                 }
                 else
                 {
-                    SetValueToExporterOptions(sp, options);
+                    options.SetValueToExporterOptions(sp);
                     var sdkProviderWrapper = sp.GetRequiredService<SdkProviderWrapper>();
                     sdkProviderWrapper.SdkTracerProvider = (TracerProvider)sdkTracerProviderServiceRegistration.ImplementationFactory(sp);
                     return sdkProviderWrapper.SdkTracerProvider;
@@ -89,7 +92,7 @@ namespace Azure.Monitor.OpenTelemetry
                 }
                 else
                 {
-                    SetValueToExporterOptions(sp, options);
+                    options.SetValueToExporterOptions(sp);
                     var sdkProviderWrapper = sp.GetRequiredService<SdkProviderWrapper>();
                     sdkProviderWrapper.SdkMeterProvider = (MeterProvider)sdkMeterProviderServiceRegistration.ImplementationFactory(sp);
                     return sdkProviderWrapper.SdkMeterProvider;
