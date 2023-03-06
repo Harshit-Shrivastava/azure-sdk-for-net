@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Maintenance.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Compatibility;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
+using NUnit.Framework.Internal;
 
 namespace Azure.ResourceManager.Maintenance.Tests
 {
@@ -21,8 +23,8 @@ namespace Azure.ResourceManager.Maintenance.Tests
     /// </summary>
     public class MaintenanceConfigurationTests : MaintenanceManagementTestBase
     {
-        private string rgGroupNamePrefix;
-        private string assetName;
+        private string rgGroupNamePrefix = "testRg";
+        private string assetName = "resource";
 
         public MaintenanceConfigurationTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
@@ -30,40 +32,38 @@ namespace Azure.ResourceManager.Maintenance.Tests
 
         public MaintenanceConfigurationTests(bool isAsync) : base(isAsync) { }
 
-        [SetUp]
-        public void SetUp()
-        {
-            rgGroupNamePrefix = "testRg";
-            assetName = "resource";
-        }
-
         [Test]
         [RecordedTest]
         public async Task UpdateMaintenanceConfigurationTest()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, AzureLocation.WestUS);
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, new AzureLocation("EastUS2EUAP"));
             string resourceName = Recording.GenerateAssetName(assetName);
 
             // this example assumes you already have this MaintenanceConfigurationResource created on azure
             // for more information of creating MaintenanceConfigurationResource, please refer to the document of MaintenanceConfigurationResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
-            ResourceIdentifier maintenanceConfigurationResourceId = MaintenanceConfigurationResource.CreateResourceIdentifier(subscriptionId, rg.Data.Name, resourceName);
-            MaintenanceConfigurationResource maintenanceConfiguration = Client.GetMaintenanceConfigurationResource(maintenanceConfigurationResourceId);
+            //string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            ResourceIdentifier maintenanceConfigurationResourceId = MaintenanceConfigurationResource.CreateResourceIdentifier(subscription.Id, rg.Data.Name, resourceName);
+            //MaintenanceConfigurationResource maintenanceConfiguration = Client.GetMaintenanceConfigurationResource(maintenanceConfigurationResourceId);
 
             // invoke the operation
-            MaintenanceConfigurationData data = new MaintenanceConfigurationData(new AzureLocation("westus2"))
-            {
-                Namespace = "Microsoft.Maintenance",
-                MaintenanceScope = MaintenanceScope.Host,
-                Visibility = MaintenanceConfigurationVisibility.Custom,
-                StartOn = DateTimeOffset.Parse("2020-04-30 08:00"),
-                ExpireOn = DateTimeOffset.Parse("9999-12-31 00:00"),
-                Duration = TimeSpan.Parse("05:00"),
-                TimeZone = "Pacific Standard Time",
-                RecurEvery = "Month Third Sunday",
-            };
-            MaintenanceConfigurationResource result = await maintenanceConfiguration.UpdateAsync(data);
+            MaintenanceConfigurationData data = new MaintenanceConfigurationData(maintenanceConfigurationResourceId, resourceName, maintenanceConfigurationResourceId.ResourceType, new SystemData(), new Dictionary<string, string>(), new AzureLocation("EastUS2EUAP"), null, null, MaintenanceScope.Host, null, null, DateTimeOffset.Parse("2023-06-30 08:00"), null, new TimeSpan(2, 0, 0), "Indian Standard Time", "1Month Third Sunday");
+            //{
+            //    Namespace = "Microsoft.Maintenance",
+            //    MaintenanceScope = MaintenanceScope.Host,
+            //    Visibility = MaintenanceConfigurationVisibility.Custom,
+            //    StartOn = DateTimeOffset.Parse("2023-06-30 08:00"),
+            //    ExpireOn = DateTimeOffset.Parse("9999-12-31 00:00"),
+            //    Duration = TimeSpan.Parse("05:00"),
+            //    TimeZone = "Pacific Standard Time",
+            //    RecurEvery = "1Month Third Sunday",
+            //};
+
+            MaintenanceConfigurationResource mrp = new MaintenanceConfigurationResource(Client, data);
+
+            //mrp.UpdateAsync()
+
+            MaintenanceConfigurationResource result = await mrp.UpdateAsync(data);
 
             Assert.AreEqual(resourceName, result.Data.Name);
             Assert.AreEqual(data.Namespace, result.Data.Namespace);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
         public async Task DeleteMaintenanceConfigurationTest()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, AzureLocation.WestUS);
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, new AzureLocation("EastUS2EUAP"));
             string resourceName = Recording.GenerateAssetName(assetName);
 
             // this example assumes you already have this MaintenanceConfigurationResource created on azure
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
         public async Task GetMaintenanceConfigurationTest()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, AzureLocation.WestUS);
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, new AzureLocation("EastUS2EUAP"));
             string resourceName = Recording.GenerateAssetName(assetName);
 
             // this example assumes you already have this MaintenanceConfigurationResource created on azure
@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.Maintenance.Tests
         public async Task CreateMaintenanceConfigurationTest()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, AzureLocation.WestUS);
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, new AzureLocation("EastUS2EUAP"));
             string resourceName = Recording.GenerateAssetName(assetName);
 
             // invoke the operation
-            ArmOperation<MaintenanceConfigurationResource> result = await rg.GetMaintenanceConfigurations().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, new MaintenanceConfigurationData(AzureLocation.WestUS));
+            ArmOperation<MaintenanceConfigurationResource> result = await rg.GetMaintenanceConfigurations().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, new MaintenanceConfigurationData(new AzureLocation("EastUS2EUAP")));
             Assert.AreEqual(resourceName, result.Value.Data.Name);
         }
     }

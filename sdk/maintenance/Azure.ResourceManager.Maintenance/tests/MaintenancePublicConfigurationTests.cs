@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +29,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
             string assetName = "resource";
             string rgGroupNamePrefix = "testRg";
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, AzureLocation.WestUS);
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, new AzureLocation("EastUS2EUAP"));
             string resourceName = Recording.GenerateAssetName(assetName);
             ResourceIdentifier maintenanceConfigurationResourceId = MaintenancePublicConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceName);
             MaintenancePublicConfigurationResource maintenancePublicConfiguration = Client.GetMaintenancePublicConfigurationResource(maintenanceConfigurationResourceId);

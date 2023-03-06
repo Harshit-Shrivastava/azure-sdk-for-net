@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,6 +39,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
             providerName = "Microsoft.Compute";
             resourceType = "virtualNMachineScaleSets";
             applyUpdateName = "e9b9685d-78e4-44c4-a81c-64a14f9b87b6";
+            resourceParentType = "virtualMachineScaleSets";
         }
 
         [Test]
@@ -43,7 +47,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
         public async Task ApplyUpdatesGetParentTest()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, AzureLocation.WestUS);
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, new AzureLocation("EastUS2EUAP"));
             string resourceName = Recording.GenerateAssetName(assetName);
             string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceParentName = "smdtest1";
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
         public async Task ApplyUpdatesGetTest()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, AzureLocation.WestUS);
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, new AzureLocation("EastUS2EUAP"));
             string resourceName = Recording.GenerateAssetName(assetName);
             string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             ResourceIdentifier resourceIdentifier = MaintenanceApplyUpdateResource.CreateResourceIdentifier(subscriptionId, rg.Data.Name, providerName, resourceType, resourceName, applyUpdateName);
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
         public async Task ApplyUpdatesCreateOrUpdateParentTest()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, AzureLocation.WestUS);
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, new AzureLocation("EastUS2EUAP"));
             string resourceName = Recording.GenerateAssetName(assetName);
             string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceParentName = "smdtest1";
@@ -107,7 +111,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
             string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string resourceName = Recording.GenerateAssetName(assetName);
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, AzureLocation.WestUS);
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, new AzureLocation("EastUS2EUAP"));
             ResourceIdentifier resourceIdentifier = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, rg.Data.Name);
 
             // invoke the operation
