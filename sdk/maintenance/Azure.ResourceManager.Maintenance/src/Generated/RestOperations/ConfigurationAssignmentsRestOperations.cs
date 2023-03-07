@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Maintenance
             return message;
         }
 
-        /// <summary> Get configuration for resource. </summary>
+        /// <summary> Get configuration assignment for resource.. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="providerName"> Resource provider name. </param>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Maintenance
             }
         }
 
-        /// <summary> Get configuration for resource. </summary>
+        /// <summary> Get configuration assignment for resource.. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="providerName"> Resource provider name. </param>
@@ -213,6 +213,7 @@ namespace Azure.ResourceManager.Maintenance
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -254,6 +255,7 @@ namespace Azure.ResourceManager.Maintenance
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
@@ -403,7 +405,7 @@ namespace Azure.ResourceManager.Maintenance
             return message;
         }
 
-        /// <summary> Get configuration for resource. </summary>
+        /// <summary> Get configuration assignment for resource.. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="providerName"> Resource provider name. </param>
@@ -440,7 +442,7 @@ namespace Azure.ResourceManager.Maintenance
             }
         }
 
-        /// <summary> Get configuration for resource. </summary>
+        /// <summary> Get configuration assignment for resource.. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="providerName"> Resource provider name. </param>
@@ -533,6 +535,7 @@ namespace Azure.ResourceManager.Maintenance
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -570,6 +573,7 @@ namespace Azure.ResourceManager.Maintenance
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);

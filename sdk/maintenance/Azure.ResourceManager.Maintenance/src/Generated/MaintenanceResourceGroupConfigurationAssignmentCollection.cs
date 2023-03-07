@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Get configuration for resource.
+        /// Get configuration assignment for resource..
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Get configuration for resource.
+        /// Get configuration assignment for resource..
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
