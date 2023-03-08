@@ -24,6 +24,17 @@ namespace Azure.ResourceManager.Maintenance.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(ExtensionProperties))
+            {
+                writer.WritePropertyName("extensionProperties"u8);
+                writer.WriteStartObject();
+                foreach (var item in ExtensionProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsDefined(MaintenanceConfigurationId))
             {
                 writer.WritePropertyName("maintenanceConfigurationId"u8);
@@ -87,6 +98,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Optional<IDictionary<string, string>> extensionProperties = default;
             Optional<ResourceIdentifier> maintenanceConfigurationId = default;
             Optional<ResourceIdentifier> resourceId = default;
             Optional<IList<string>> resourceTypes = default;
@@ -139,6 +151,21 @@ namespace Azure.ResourceManager.Maintenance.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("extensionProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            extensionProperties = dictionary;
+                            continue;
+                        }
                         if (property0.NameEquals("maintenanceConfigurationId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -230,7 +257,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     continue;
                 }
             }
-            return new MaintenanceConfigurationAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(location), maintenanceConfigurationId.Value, resourceId.Value, Optional.ToList(resourceTypes), Optional.ToList(resourceGroups), Optional.ToList(locations), tagSettings.Value);
+            return new MaintenanceConfigurationAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToDictionary(extensionProperties), maintenanceConfigurationId.Value, resourceId.Value, Optional.ToList(resourceTypes), Optional.ToList(resourceGroups), Optional.ToList(locations), tagSettings.Value);
         }
     }
 }

@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.Maintenance.Tests
     /// <summary>
     /// Tests for maintenance SDK - Maintenance Configuration
     /// </summary>
-    public class MaintenanceConfigurationTests : MaintenanceManagementTestBase
+    public class MaintenanceConfigurationTests2 : MaintenanceManagementTestBase
     {
         private string rgGroupNamePrefix = "testRg";
         private string assetName = "resource";
 
-        public MaintenanceConfigurationTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        public MaintenanceConfigurationTests2(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
         }
 
-        public MaintenanceConfigurationTests(bool isAsync) : base(isAsync) { }
+        public MaintenanceConfigurationTests2(bool isAsync) : base(isAsync) { }
 
         [Test]
         [RecordedTest]
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Maintenance.Tests
             {
                 Namespace = "Microsoft.Maintenance",
                 MaintenanceScope = MaintenanceScope.Host,
-                Visibility = MaintenanceConfigurationVisibility.Custom/*,
+                Visibility = MaintenanceConfigurationVisibility.Custom,
                 StartOn = DateTimeOffset.Parse("2023-06-30 08:00"),
                 ExpireOn = DateTimeOffset.Parse("9999-12-31 00:00"),
                 Duration = TimeSpan.Parse("03:00"),
                 TimeZone = "Pacific Standard Time",
-                RecurEvery = "1Month Third Sunday"*/
+                RecurEvery = "1Month Third Sunday"
             };
 
             ArmOperation<MaintenanceConfigurationResource> mrp = await rg.GetMaintenanceConfigurations().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Maintenance.Tests
             Assert.AreEqual(resourceName, result.Data.Name);
             Assert.AreEqual(data.Namespace, result.Data.Namespace);
             Assert.AreEqual(data.MaintenanceScope, result.Data.MaintenanceScope);
-            /*Assert.AreEqual(data.Visibility, result.Data.Visibility);
+            Assert.AreEqual(data.Visibility, result.Data.Visibility);
             Assert.AreEqual(data.StartOn, result.Data.StartOn);
             Assert.AreEqual(data.ExpireOn, result.Data.ExpireOn);
             Assert.AreEqual(data.Duration, result.Data.Duration);
             Assert.AreEqual(data.TimeZone, result.Data.TimeZone);
-            Assert.AreEqual(data.RecurEvery, result.Data.RecurEvery);*/
+            Assert.AreEqual(data.RecurEvery, result.Data.RecurEvery);
         }
 
         [Test]

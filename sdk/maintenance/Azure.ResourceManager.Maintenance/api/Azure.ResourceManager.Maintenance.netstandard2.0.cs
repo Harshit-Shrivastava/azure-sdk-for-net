@@ -333,6 +333,7 @@ namespace Azure.ResourceManager.Maintenance.Models
     public partial class MaintenanceConfigurationAssignmentData : Azure.ResourceManager.Models.ResourceData
     {
         public MaintenanceConfigurationAssignmentData() { }
+        public System.Collections.Generic.IDictionary<string, string> ExtensionProperties { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Locations { get { throw null; } }
         public Azure.Core.ResourceIdentifier MaintenanceConfigurationId { get { throw null; } set { } }

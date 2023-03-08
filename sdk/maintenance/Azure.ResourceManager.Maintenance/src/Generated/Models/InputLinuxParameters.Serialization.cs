@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Maintenance.Models
 
         internal static InputLinuxParameters DeserializeInputLinuxParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> packageNameMasksToExclude = default;
             Optional<IList<string>> packageNameMasksToInclude = default;
             Optional<IList<string>> classificationsToInclude = default;

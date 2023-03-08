@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Maintenance.Models
 
         internal static InputPatchConfiguration DeserializeInputPatchConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RebootOption> rebootSetting = default;
             Optional<InputWindowsParameters> windowsParameters = default;
             Optional<InputLinuxParameters> linuxParameters = default;

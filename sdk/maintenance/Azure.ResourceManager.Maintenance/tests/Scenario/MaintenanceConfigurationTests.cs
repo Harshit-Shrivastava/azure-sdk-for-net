@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
         private ResourceGroupResource _resourceGroup;
         private MaintenanceConfigurationCollection _configCollection;
 
-        public MaintenanceConfigurationTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
+        public MaintenanceConfigurationTests(bool isAsync) : base(isAsync , RecordedTestMode.Record)
         { }
 
         [SetUp]
@@ -83,6 +83,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
             Assert.IsNotEmpty(retrieveConfig.Value.Data.Id);
         }
 
+        [RecordedTest]
         private async Task<MaintenanceConfigurationResource> CreateMaintenanceConfiguration()
         {
             string resourceName = Recording.GenerateAssetName("maintenance-config-");
@@ -93,9 +94,9 @@ namespace Azure.ResourceManager.Maintenance.Tests
                 Visibility = MaintenanceConfigurationVisibility.Custom,
                 StartOn = DateTimeOffset.Parse("2023-12-31 00:00"),
                 ExpireOn = DateTimeOffset.Parse("9999-12-31 00:00"),
-                Duration = TimeSpan.Parse("05:00"),
+                Duration = TimeSpan.Parse("02:00"),
                 TimeZone = "Pacific Standard Time",
-                RecurEvery = "Day",
+                RecurEvery = "1Day",
             };
             ArmOperation<MaintenanceConfigurationResource> lro = await _configCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
             return lro.Value;
