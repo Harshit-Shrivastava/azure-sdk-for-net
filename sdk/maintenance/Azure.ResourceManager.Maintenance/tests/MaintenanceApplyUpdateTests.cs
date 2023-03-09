@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Resources;
@@ -23,11 +24,11 @@ namespace Azure.ResourceManager.Maintenance.Tests
         private string applyUpdateName;
         private string resourceParentType;
 
-        protected MaintenanceApplyUpdateTests(bool isAsync) : base(isAsync)
+        public MaintenanceApplyUpdateTests(bool isAsync) : base(isAsync)
         {
         }
 
-        protected MaintenanceApplyUpdateTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        public MaintenanceApplyUpdateTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
         }
 
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
         [RecordedTest]
         public async Task ApplyUpdatesGetParentTest()
         {
+            using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, new AzureLocation("EastUS2EUAP"));
             string resourceName = Recording.GenerateAssetName(assetName);
@@ -66,6 +68,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
         [RecordedTest]
         public async Task ApplyUpdatesGetTest()
         {
+            using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, new AzureLocation("EastUS2EUAP"));
             string resourceName = Recording.GenerateAssetName(assetName);
@@ -87,6 +90,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
         [RecordedTest]
         public async Task ApplyUpdatesCreateOrUpdateParentTest()
         {
+            using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, rgGroupNamePrefix, new AzureLocation("EastUS2EUAP"));
             string resourceName = Recording.GenerateAssetName(assetName);
@@ -108,6 +112,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
         [RecordedTest]
         public async Task ApplyUpdatesCreateOrUpdateTest()
         {
+            using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
             string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string resourceName = Recording.GenerateAssetName(assetName);

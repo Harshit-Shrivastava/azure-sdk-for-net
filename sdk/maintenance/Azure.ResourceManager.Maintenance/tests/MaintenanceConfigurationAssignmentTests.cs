@@ -11,13 +11,13 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Maintenance.Tests
 {
-    internal class MaintenanceConfigurationAssignmentTests : MaintenanceManagementTestBase
+    public class MaintenanceConfigurationAssignmentTests : MaintenanceManagementTestBase
     {
-        protected MaintenanceConfigurationAssignmentTests(bool isAsync) : base(isAsync)
+        public MaintenanceConfigurationAssignmentTests(bool isAsync) : base(isAsync)
         {
         }
 
-        protected MaintenanceConfigurationAssignmentTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        public MaintenanceConfigurationAssignmentTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
         }
     }

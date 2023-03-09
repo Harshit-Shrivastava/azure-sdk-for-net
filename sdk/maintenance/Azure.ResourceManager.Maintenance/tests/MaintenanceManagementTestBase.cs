@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Maintenance.Tests
         protected ArmClient Client { get; private set; }
         protected AzureLocation Location = AzureLocation.EastUS;
 
-        protected MaintenanceManagementTestBase(bool isAsync, RecordedTestMode mode)
+        public MaintenanceManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected MaintenanceManagementTestBase(bool isAsync)
+        public MaintenanceManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }
